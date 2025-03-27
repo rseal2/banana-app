@@ -1,8 +1,12 @@
 from roboflow import Roboflow
 import os
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
+api_key = os.getenv("ROBOFLOW_API_KEY")
 # Initialize Roboflow
-rf = Roboflow(api_key="tQqAGtwn8vsADYX5nrcT")  # Replace with your actual API key
+rf = Roboflow(api_key)  # Replace with your actual API key
 
 # Target project (from your URL)
 workspace = rf.workspace("ml-project-zblcx")
