@@ -1,28 +1,71 @@
 # Banana App
 
-# Running the Backend
-To start the backend server, run the following commands:
+## Features
 
-```
-bash
-cd backend
-python3 server.py 
-```
-# Running the Frontend
-Navigate to the frontend directory and start the development server using one of the following package managers:
+- REST API endpoint to fetch user data.
+- CORS enabled for cross-origin requests.
+- Easy to set up and run locally.
+- Frontend setup with Vite and npm.
 
-```
-bash
-cd react-app
+## Requirements
 
-# Using npm
-npm run dev 
+- Python 3.7 or higher
+- Flask
+- Flask-CORS
+- Node.js and npm
 
-# Using yarn
-yarn dev
+## Setup
 
-# Using pnpm
-pnpm dev
+### Backend
 
-# Using bun
-bun dev
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd banana-app
+   ```
+
+2. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   ```
+
+3. Activate the virtual environment:
+   - On Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
+   - On macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+
+4. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. Run the application:
+   ```bash
+   python server/venv/main.py
+   ```
+
+### Frontend
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd client
+   ```
+
+2. Install dependencies using npm:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## License
+
+This project is licensed under the MIT License.
