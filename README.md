@@ -1,5 +1,7 @@
 # Last Pick
 
+## Banana classification program that determines whether a banana is unripe, ripe, overripe, and rotten. 
+
 ## Features
 
 - REST API endpoint to fetch user data.
