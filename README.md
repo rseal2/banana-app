@@ -1,4 +1,4 @@
-# Banana App
+# Last Pick
 
 ## Features
 
