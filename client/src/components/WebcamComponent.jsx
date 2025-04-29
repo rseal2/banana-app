@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import ClassificationDisplay from './ClassificationDisplay';
 
 const WebcamComponent = () => {
   const webcamRef = useRef(null);
@@ -8,7 +7,7 @@ const WebcamComponent = () => {
   const [classification, setClassification] = useState(null);
 
   const captureImage = () => {
-    const imageSrc = webcamRef.current.getScreenshot();
+    const imageSrc = webcamRef.current.getScreenshot(); // automatically converts to a base64 jpeg string
     if (imageSrc) {
       setCapturedImage(imageSrc);
       setClassification(null); // reset classification on new capture
@@ -92,10 +91,6 @@ const WebcamComponent = () => {
             </button>
           </>
         )}
-      </div>
-
-      <div style={{ marginTop: "20px" }}>
-        <ClassificationDisplay classification={classification} />
       </div>
     </div>
   );
