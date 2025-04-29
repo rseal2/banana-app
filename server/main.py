@@ -1,9 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from inference_sdk import InferenceHTTPClient
 import os
 import requests
 from dotenv import load_dotenv
+from base64 import b64encode
 
 #reusable variables
 load_dotenv()
@@ -21,17 +22,24 @@ def users():
 @app.route('/classify', methods=['POST'])
 def classify():
     data = request.json
-    img = data.get("image")
+    img = data.get('image')
     if not img:
-        return jsonify({"error" : "No image provided"}), 400
-    
-    roboflow_url = f"https://classify.roboflow.com/{model_id}?api_key={api_key}"
+        return jsonify({"error": "No image provided"}), 400
 
+    base64_data = img.split(",")[1] if "," in img else img
+
+    # Fix padding
+    missing_padding = len(base64_data) % 4
+    if missing_padding:
+        base64_data += '=' * (4 - missing_padding)
+
+    roboflow_url = f"https://classify.roboflow.com/{model_id}?api_key={api_key}"
     response = requests.post(
         roboflow_url,
-        json={"image":base64_image.split(","[1] if "," in base64_image else base64_image)},
+        json={"image": base64_data},
         headers={"Content-Type": "application/json"}
     )
+
     return jsonify(response.json())
 
 if __name__ == '__main__':

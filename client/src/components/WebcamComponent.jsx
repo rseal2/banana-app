@@ -1,52 +1,71 @@
 import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import './WebcamComponent.css'; 
+import axios from 'axios';
 
 const WebcamComponent = () => {
   const webcamRef = useRef(null);
-  const [imgSrc, setImgSrc] = useState(null);
-  const [facingMode, setFacingMode] = useState('user'); // 'user' or 'environment'
+  const [capturedImage, setCapturedImage] = useState(null);
 
-  const capture = () => {
-    const imageSrc = webcamRef.current.getScreenshot();
-    setImgSrc(imageSrc);
+  const captureImage = () => {
+    const imageSrc = webcamRef.current.getScreenshot(); // base64 string
+    if (imageSrc) {
+      setCapturedImage(imageSrc); // save base64 directly
+    } else {
+      console.error('No image captured.');
+    }
   };
 
-  const switchCamera = () => {
-    setFacingMode(prev => (prev === 'user' ? 'environment' : 'user'));
-  };
+  const sendImage = async () => {
+    if (!capturedImage) {
+      console.error('No image to send.');
+      return;
+    }
 
-  const videoConstraints = {
-    facingMode: facingMode,
-    width: 640,
-    height: 350,
+    try {
+      const response = await axios.post('http://127.0.0.1:8080/classify', {
+        image: capturedImage,  // directly send base64
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Backend Response:', response.data);
+    } catch (error) {
+      console.error('Error sending image:', error);
+    }
   };
 
   return (
-    <div className="webcam-container">
-      <h2>Webcam Component</h2>
-      
-      {imgSrc ? (
-        <div className="captured-image">
-          <img src={imgSrc} alt="Captured" />
-          <button onClick={() => setImgSrc(null)}>Retake</button>
-        </div>
+    <div>
+      {!capturedImage ? (
+        <Webcam
+        audio={false}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        width={640}
+        height={480}
+        videoConstraints={{
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          facingMode: "user" 
+        }}
+      />
       ) : (
-        <div className="webcam-view">
-          <Webcam
-            audio={false}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            videoConstraints={videoConstraints}
-          />
-          <div className="controls">
-            <button onClick={capture}>Capture photo</button>
-            <button onClick={switchCamera}>
-              Switch Camera {facingMode === 'user' ? '(Front)' : '(Back)'}
-            </button>
-          </div>
-        </div>
+        <img src={capturedImage} alt="Captured" />
       )}
+      <div>
+        {!capturedImage ? (
+          <button onClick={captureImage}>
+            Capture Image
+          </button>
+        ) : (
+          <>
+            <button onClick={sendImage}>Send Image</button>
+            <button onClick={() => setCapturedImage(null)}>Retake</button>
+          </>
+        )}
+      </div>
     </div>
   );
 };
