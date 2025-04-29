@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import ClassificationDisplay from './ClassificationDisplay';
 import Webcam from 'react-webcam';
 
 const WebcamComponent = () => {
@@ -91,6 +92,9 @@ const WebcamComponent = () => {
             </button>
           </>
         )}
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        <ClassificationDisplay classification={classification} />
       </div>
     </div>
   );
