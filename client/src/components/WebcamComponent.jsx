@@ -1,70 +1,101 @@
 import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
-import axios from 'axios';
+import ClassificationDisplay from './ClassificationDisplay';
 
 const WebcamComponent = () => {
   const webcamRef = useRef(null);
   const [capturedImage, setCapturedImage] = useState(null);
+  const [classification, setClassification] = useState(null);
 
   const captureImage = () => {
-    const imageSrc = webcamRef.current.getScreenshot(); // base64 string
+    const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
-      setCapturedImage(imageSrc); // save base64 directly
+      setCapturedImage(imageSrc);
+      setClassification(null); // reset classification on new capture
     } else {
       console.error('No image captured.');
     }
   };
 
-  const sendImage = async () => {
-    if (!capturedImage) {
-      console.error('No image to send.');
-      return;
-    }
-
+  const sendToRoboflow = async () => {
+    if (!capturedImage) return;
+  
     try {
-      const response = await axios.post('http://127.0.0.1:8080/classify', {
-        image: capturedImage,  // directly send base64
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const base64Data = capturedImage.split(",")[1]; // remove data:image/jpeg;base64, prefix
+      const response = await fetch(
+        'https://serverless.roboflow.com/banana-classification-eprkr/2?api_key=tQqAGtwn8vsADYX5nrcT',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: base64Data,
+        }
+      );
+  
+      const data = await response.json();
+      console.log(data);
 
-      console.log('Backend Response:', response.data);
+      // extract top prediction
+      const predictions = Object.entries(data.predictions); 
+      if (predictions.length > 0) { 
+        predictions.sort((a, b) => b[1].confidence - a[1].confidence);
+        setClassification(predictions[0]);
+      } else { 
+        setClassification(["No predictions", {confidence : 0}]); 
+      }
     } catch (error) {
-      console.error('Error sending image:', error);
+      console.error('Error sending image to Roboflow:', error);
     }
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
+      <h1>Banana Classification</h1>
+
       {!capturedImage ? (
         <Webcam
-        audio={false}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        width={640}
-        height={480}
-        videoConstraints={{
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-          facingMode: "user" 
-        }}
-      />
+          audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          width="100%"
+          style={{ borderRadius: "8px" }}
+          videoConstraints={{
+            facingMode: "user",
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+          }}
+        />
       ) : (
-        <img src={capturedImage} alt="Captured" />
+        <img
+          src={capturedImage}
+          alt="Captured"
+          style={{ maxWidth: "100%", borderRadius: "8px" }}
+        />
       )}
-      <div>
+
+      <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
         {!capturedImage ? (
-          <button onClick={captureImage}>
-            Capture Image
-          </button>
+          <button onClick={captureImage}>Capture Image</button>
         ) : (
           <>
-            <button onClick={sendImage}>Send Image</button>
-            <button onClick={() => setCapturedImage(null)}>Retake</button>
+            <button onClick={sendToRoboflow}>
+              {"Classify with Roboflow"}
+            </button>
+            <button
+              onClick={() => {
+                setCapturedImage(null);
+                setClassification(null);
+              }}
+            >
+              Retake Photo
+            </button>
           </>
         )}
+      </div>
+
+      <div style={{ marginTop: "20px" }}>
+        <ClassificationDisplay classification={classification} />
       </div>
     </div>
   );
