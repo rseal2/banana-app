@@ -16,11 +16,11 @@ export default function About() {
 
   return (
     <div style={{
-      maxWidth: '1200px',
+      maxWidth: '1100px',
       margin: '2rem auto',
       padding: '2rem',
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      color: '#333',
+      color: 'black',
     }}>
       {/* Problem Section */}
       <section style={{
@@ -34,10 +34,10 @@ export default function About() {
           textAlign: 'center',
           marginBottom: '1.5rem',
           fontSize: '2rem',
-          color: '#2c3e50',
+          color: 'black',
           fontWeight: '600'
         }}>
-          THE PROBLEM
+          THE PROBLEM 🔎
         </h2>
         <p style={{
           textAlign: 'center',
@@ -64,10 +64,10 @@ export default function About() {
           textAlign: 'center',
           marginBottom: '1.5rem',
           fontSize: '2rem',
-          color: '#2c3e50',
+          color: 'black',
           fontWeight: '600'
         }}>
-          HOW DO WE HELP?
+          HOW DO WE HELP? 🤝
         </h2>
         <p style={{
           textAlign: 'center',
@@ -88,7 +88,7 @@ export default function About() {
           textAlign: 'center',
           margin: '3rem 0',
           fontSize: '2rem',
-          color: '#2c3e50',
+          color: 'black',
           fontWeight: '600',
           position: 'relative'
         }}>
@@ -133,7 +133,7 @@ export default function About() {
                 marginTop: '1.2rem',
                 fontWeight: '600',
                 fontSize: '1.2rem',
-                color: '#2c3e50'
+                color: '#black',
               }}>
                 {member.text}
               </h3>

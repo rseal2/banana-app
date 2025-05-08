@@ -51,8 +51,6 @@ const WebcamComponent = () => {
 
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
-      <h1>Banana Classification</h1>
-
       {!capturedImage ? (
         <Webcam
           audio={false}
