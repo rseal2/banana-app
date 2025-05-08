@@ -133,7 +133,7 @@ export default function About() {
                 marginTop: '1.2rem',
                 fontWeight: '600',
                 fontSize: '1.2rem',
-                color: '#black',
+                color: 'black',
               }}>
                 {member.text}
               </h3>
