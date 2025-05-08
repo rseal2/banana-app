@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logo from '../assets/brand.png'; 
 
 export default function Navbar() {
   return (
@@ -8,19 +9,12 @@ export default function Navbar() {
       justifyContent: 'space-between',
       alignItems: 'center',
     }}>
-      {/* Logo (Inline SVG) */}
       <Link to="/" style={{ textDecoration: 'none' }}>
-        <svg 
-          width="40" 
-          height="40" 
-          viewBox="0 0 40 40" 
-          fill="#86a97c"  // Your brand color
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Paste your SVG path(s) here */}
-          <path d="M10 20L20 10L30 20L20 30Z" />
-          <text x="10" y="25" fill="#86a97c">LOGO</text> {/* Optional text */}
-        </svg>
+      <img 
+  src={logo} 
+  alt="Logo" 
+  style={{ height: '100px' }}
+/>
       </Link>
 
       {/* Navigation Links */}
@@ -37,4 +31,5 @@ const linkStyle = {
   color: '#86a97c',
   textDecoration: 'none',
   fontWeight: 'bold',
+  fontSize: '1.3rem',
 };
