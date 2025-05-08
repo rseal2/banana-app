@@ -19,7 +19,7 @@
 }
 
 button {
-  padding: 0.5rem 1rem;
+  padding: 1rem 2rem;
   background: #86a97c;
   color: black;
   border: none;
@@ -28,7 +28,7 @@ button {
 }
 
 button:hover {
-  background: #cbedc2;
+  background: #a6cf9b;
 }
 
 .captured-image img {

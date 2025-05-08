@@ -19,7 +19,7 @@ const WebcamComponent = () => {
 
   const sendToRoboflow = async () => {
     if (!capturedImage) return;
-  
+
     try {
       const base64Data = capturedImage.split(",")[1]; // remove data:image/jpeg;base64, prefix
       const response = await fetch(
@@ -32,17 +32,17 @@ const WebcamComponent = () => {
           body: base64Data,
         }
       );
-  
+
       const data = await response.json();
       console.log(data);
 
       // extract top prediction
-      const predictions = Object.entries(data.predictions); 
-      if (predictions.length > 0) { 
+      const predictions = Object.entries(data.predictions);
+      if (predictions.length > 0) {
         predictions.sort((a, b) => b[1].confidence - a[1].confidence);
         setClassification(predictions[0]);
-      } else { 
-        setClassification(["No predictions", {confidence : 0}]); 
+      } else {
+        setClassification(["No predictions", { confidence: 0 }]);
       }
     } catch (error) {
       console.error('Error sending image to Roboflow:', error);
@@ -50,7 +50,24 @@ const WebcamComponent = () => {
   };
 
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
+
+    <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+      <h2 style={{
+        textAlign: 'center',
+        margin: '3rem 0',
+        fontSize: '2rem',
+        color: 'black',
+        fontWeight: '600',
+        position: 'relative'
+      }}>
+        THE PRODUCT
+        <div style={{
+          width: '80px',
+          height: '4px',
+          backgroundColor: '#86a97c',
+          margin: '0.5rem auto 0',
+        }}></div>
+      </h2>
       {!capturedImage ? (
         <Webcam
           audio={false}
@@ -72,12 +89,12 @@ const WebcamComponent = () => {
         />
       )}
 
-      <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
+      <div style={{ marginTop: "20px", display: "flex", gap: "20px" }}>
         {!capturedImage ? (
-          <button onClick={captureImage}>Capture Image</button>
+          <button onClick={captureImage} style={{ fontSize: "18px" }}>Capture Image</button>
         ) : (
           <>
-            <button onClick={sendToRoboflow}>
+            <button onClick={sendToRoboflow} style={{ fontSize: "18px" }}>
               {"Classify with Roboflow"}
             </button>
             <button
@@ -85,6 +102,7 @@ const WebcamComponent = () => {
                 setCapturedImage(null);
                 setClassification(null);
               }}
+              style={{ fontSize: "18px" }}
             >
               Retake Photo
             </button>

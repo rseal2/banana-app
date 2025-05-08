@@ -53,7 +53,7 @@ export default function Classification() {
           color: 'black',
           fontWeight: '600'
         }}>
-          HOW TO USE OUR APP 🧑‍💻
+          HOW TO USE LAST PICK 🧑‍💻
         </h2>
         <p style={{
           textAlign: 'center',
