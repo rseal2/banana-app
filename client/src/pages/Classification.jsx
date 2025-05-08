@@ -10,6 +10,7 @@ export default function Classification() {
             fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
             color: 'black',
           }}>        
+          
         {/* Classification/Image Capturing Section */}
         <section style={{
         marginBottom: '3rem',
