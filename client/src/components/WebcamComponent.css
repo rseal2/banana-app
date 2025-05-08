@@ -19,16 +19,18 @@
 }
 
 button {
-  padding: 0.5rem 1rem;
-  background: #646cff;
-  color: white;
+  padding: 1rem 2rem;
+  background: #86a97c;
+  color: black;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  font-weight: 400;
 }
 
 button:hover {
-  background: #535bf2;
+  background: #a6cf9b;
 }
 
 .captured-image img {
