@@ -19,9 +19,9 @@ export default function Navbar() {
 
       {/* Navigation Links */}
       <div style={{ display: 'flex', gap: '2rem' }}>
-        <Link to="/" style={linkStyle}>CLASSIFICATION</Link>
+        <Link to="/" style={linkStyle}>ABOUT</Link>
+        <Link to="/classification" style={linkStyle}>CLASSIFICATION</Link>
         <Link to="/dashboard" style={linkStyle}>DASHBOARD</Link>
-        <Link to="/about" style={linkStyle}>ABOUT</Link>
       </div>
     </nav>
   );

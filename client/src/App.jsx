@@ -25,9 +25,9 @@ function App() {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Classification />} />
+        <Route path="/" element={<About />} />
+        <Route path="/classification" element={<Classification />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/about" element={<About />} />
       </Routes>
     </>
   );
