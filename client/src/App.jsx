@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
-import ClassificationDisplay from './components/ClassificationDisplay';
-import WebcamComponent from "./components/WebcamComponent";
+import Navbar from './components/NavBar';
+import { Routes, Route } from 'react-router-dom'; 
+import Classification from './pages/Classification';
+import Dashboard from './pages/Dashboard';
+import About from './pages/About';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,10 +23,12 @@ function App() {
 
   return (
     <>
-      <div className="App">
-        <WebcamComponent setClassification={setClassification} />
-      </div>
-      <ClassificationDisplay classification={classification} />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<About />} />
+        <Route path="/classification" element={<Classification />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
     </>
   );
 }
